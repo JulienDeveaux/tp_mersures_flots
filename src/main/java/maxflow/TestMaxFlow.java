@@ -32,6 +32,12 @@ public class TestMaxFlow
 
         System.out.println(mf.getFlow());
 
+        g.nodes().forEach(n ->
+        {
+            n.setAttribute("ui.label", n.getId());
+            n.setAttribute("ui.style", "fill-color: blue; text-size: 15px; text-alignment: above;");
+        });
+
         g.edges().forEach( e ->
         {
             double flow = mf.getFlow(e);
