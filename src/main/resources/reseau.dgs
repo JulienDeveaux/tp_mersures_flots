@@ -1,0 +1,28 @@
+DGS004
+null 0 0
+
+
+an A ui.label:A
+an B ui.label:B
+an C ui.label:C
+an D ui.label:D
+an E ui.label:E
+an F ui.label:F
+an G ui.label:G
+an H ui.label:H
+an I ui.label:I
+
+ae A-B A>B cap:800
+ae A-C A>C cap:700
+ae B-D B>D cap:600
+ae B-E B>E cap:100
+ae C-D C>D cap:100
+ae C-E C>E cap:300
+ae C-F C>F cap:300
+ae D-G D>G cap:700
+ae D-H D>H cap:200
+ae E-G E>G cap:500
+ae F-G F>G cap:200
+ae F-H F>H cap:200
+ae G-I G>I cap:500
+ae H-I H>I cap:1000
