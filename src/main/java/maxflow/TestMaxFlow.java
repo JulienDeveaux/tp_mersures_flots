@@ -2,6 +2,7 @@ package maxflow;
 
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.stream.GraphParseException;
 
@@ -103,11 +104,49 @@ public class TestMaxFlow
         {
             double flow = mf.getFlow(e);
             double cap = mf.getCapacity(e);
-            if (flow > 0) e.setAttribute("ui.label", "" + flow);
+            if (flow > 0) {
+                e.setAttribute("ui.label", flow);
+            } else {
+                e.setAttribute("ui.label", 0.0);
+            }
             if (cap == flow) e.setAttribute("ui.style", "fill-color: red;");
         });
 
         reseau.display();
+
+        Graph reseauEcart = new SingleGraph("Graph d'écart autoroute");
+        reseauEcart.setAttribute("ui.stylesheet", styleSheet);
+        for(Node n: reseau.nodes().toList()) {
+            reseauEcart.addNode(n.getId()).setAttribute("ui.label", n.getAttribute("ui.label"));
+        }
+        for(Edge e : reseau.edges().toList()) {
+            Node nSource = e.getSourceNode();
+            Node nTarget = e.getTargetNode();
+
+            Edge ed = reseauEcart.addEdge(e.getId(), nTarget.getId(), nSource.getId(), true);
+            double label = (double)e.getAttribute("ui.label");
+            if(label != 0) {
+                ed.setAttribute("ui.label", label);
+            } else {
+                ed.setAttribute("ui.label", "");
+            }
+            ed.setAttribute("ui.style", "fill-color: red; text-alignment: above; text-color: red;");
+            ed.setAttribute("cap", e.getAttribute("cap"));
+        }
+        for(Edge e : reseauEcart.edges().toList()) {
+            double diff = 0;
+            if(e.getAttribute("ui.label") == "") {
+                diff = 0;
+            } else {
+                diff = (double)e.getAttribute("cap") - (double)e.getAttribute("ui.label");
+            }
+            if(diff > 0) {
+                Edge ed = reseauEcart.addEdge(""+reseauEcart.getEdgeCount()+1, e.getTargetNode(), e.getSourceNode(), true);
+                ed.setAttribute("ui.label", diff);
+                ed.setAttribute("ui.style", "fill-color: green; text-alignment: under; text-color: green;");
+            }
+        }
+        reseauEcart.display();
     }
 
 }

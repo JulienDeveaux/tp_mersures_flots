@@ -12,17 +12,17 @@ an G ui.label:G
 an H ui.label:H
 an I ui.label:I
 
-ae A-B A>B cap:800
-ae A-C A>C cap:700
-ae B-D B>D cap:600
-ae B-E B>E cap:100
-ae C-D C>D cap:100
-ae C-E C>E cap:300
-ae C-F C>F cap:300
-ae D-G D>G cap:700
-ae D-H D>H cap:200
-ae E-G E>G cap:500
-ae F-G F>G cap:200
-ae F-H F>H cap:200
-ae G-I G>I cap:500
-ae H-I H>I cap:1000
+ae A-B A>B cap:800.0
+ae A-C A>C cap:700.0
+ae B-D B>D cap:600.0
+ae B-E B>E cap:100.0
+ae C-D C>D cap:100.0
+ae C-E C>E cap:300.0
+ae C-F C>F cap:300.0
+ae D-G D>G cap:700.0
+ae D-H D>H cap:200.0
+ae E-G E>G cap:500.0
+ae F-G F>G cap:200.0
+ae F-H F>H cap:200.0
+ae G-I G>I cap:500.0
+ae H-I H>I cap:1000.0
