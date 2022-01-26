@@ -21,7 +21,7 @@ public class TestMaxFlow
                     "   text-size: 20px;" +
                     "}";
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         System.setProperty("org.graphstream.ui", "swing");
 
@@ -62,11 +62,9 @@ public class TestMaxFlow
 
         Graph graphCours = new SingleGraph("test cours");
         graphCours.setAttribute("ui.stylesheet", styleSheet);
-        try {
-            graphCours.read("src/main/resources/exempleCours.dgs");
-        } catch (IOException | GraphParseException e) {
-            e.printStackTrace();
-        }
+
+        graphCours.read("src/main/resources/exempleCours.dgs");
+
         mf.init(graphCours);
         mf.setSource(graphCours.getNode("s"));
         mf.setSink(graphCours.getNode("t"));
@@ -84,14 +82,10 @@ public class TestMaxFlow
 
         //graphCours.display();
 
-
         Graph reseau = new SingleGraph("autoroute");
         reseau.setAttribute("ui.stylesheet", styleSheet);
-        try {
-            reseau.read("src/main/resources/reseau.dgs");
-        } catch (IOException | GraphParseException e) {
-            e.printStackTrace();
-        }
+
+        reseau.read("src/main/resources/reseau.dgs");
 
         mf.init(reseau);
         mf.setSource(reseau.getNode("A"));
@@ -104,11 +98,9 @@ public class TestMaxFlow
         {
             double flow = mf.getFlow(e);
             double cap = mf.getCapacity(e);
-            if (flow > 0) {
-                e.setAttribute("ui.label", flow);
-            } else {
-                e.setAttribute("ui.label", 0.0);
-            }
+
+            e.setAttribute("ui.label", flow > 0 ? flow : 0.0);
+
             if (cap == flow) e.setAttribute("ui.style", "fill-color: red;");
         });
 
@@ -116,36 +108,39 @@ public class TestMaxFlow
 
         Graph reseauEcart = new SingleGraph("Graph d'écart autoroute");
         reseauEcart.setAttribute("ui.stylesheet", styleSheet);
-        for(Node n: reseau.nodes().toList()) {
-            reseauEcart.addNode(n.getId()).setAttribute("ui.label", n.getAttribute("ui.label"));
-        }
-        for(Edge e : reseau.edges().toList()) {
+
+        reseau.nodes().forEach(n -> reseauEcart.addNode(n.getId()).setAttribute("ui.label", n.getAttribute("ui.label")));
+
+        reseau.edges().forEach( e ->
+        {
             Node nSource = e.getSourceNode();
             Node nTarget = e.getTargetNode();
 
             Edge ed = reseauEcart.addEdge(e.getId(), nTarget.getId(), nSource.getId(), true);
-            double label = (double)e.getAttribute("ui.label");
-            if(label != 0) {
-                ed.setAttribute("ui.label", label);
-            } else {
-                ed.setAttribute("ui.label", "");
-            }
+            double label = (double) e.getAttribute("ui.label");
+
+            ed.setAttribute("ui.label", label != 0 ? label : null);
+
             ed.setAttribute("ui.style", "fill-color: red; text-alignment: above; text-color: red;");
             ed.setAttribute("cap", e.getAttribute("cap"));
-        }
-        for(Edge e : reseauEcart.edges().toList()) {
+        });
+
+        reseauEcart.edges().forEach(e ->
+        {
             double diff = 0;
-            if(e.getAttribute("ui.label") == "") {
-                diff = 0;
-            } else {
-                diff = (double)e.getAttribute("cap") - (double)e.getAttribute("ui.label");
-            }
-            if(diff > 0) {
-                Edge ed = reseauEcart.addEdge(""+reseauEcart.getEdgeCount()+1, e.getTargetNode(), e.getSourceNode(), true);
+
+            if(e.getAttribute("ui.label") != null)
+                diff = (double) e.getAttribute("cap") - (double) e.getAttribute("ui.label");
+
+            if(diff > 0)
+            {
+                Edge ed = reseauEcart.addEdge(String.valueOf(reseauEcart.getEdgeCount()+1), e.getTargetNode(), e.getSourceNode(), true);
+
                 ed.setAttribute("ui.label", diff);
                 ed.setAttribute("ui.style", "fill-color: green; text-alignment: under; text-color: green;");
             }
-        }
+        });
+
         reseauEcart.display();
     }
 
