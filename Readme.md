@@ -3,7 +3,7 @@
 | *Deveaux* | *Julien*|
 | *Dubois* | *Dimitri* |
 
-##A. Vérifiez son fonctionnement : observez la construction du
+## A. Vérifiez son fonctionnement : observez la construction du
    graphe dans GS, Résolvez le problème de flot max et vérifiez à la main la solution obtenue.
    - Le résultat obtenu semble correct, le flot max serait de 15 alors que les deux derniers liens ne peuvent supporter que 8 et 7 de flots. Donc 15 max dans le réseau.
    - Testez avec un second exemple (du cours ou construit par vous) :
