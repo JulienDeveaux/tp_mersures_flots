@@ -10,7 +10,7 @@ import org.graphstream.ui.view.Viewer;
 import javax.swing.*;
 import java.awt.*;
 
-public class AfficheurGraph extends JFrame
+public class AfficheurGraph extends JPanel
 {
     private Graph graph;
 
@@ -18,8 +18,7 @@ public class AfficheurGraph extends JFrame
     {
         this.graph = graph;
 
-        this.setTitle(title);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
 
         Viewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         viewer.enableAutoLayout();
@@ -34,23 +33,24 @@ public class AfficheurGraph extends JFrame
         return new Dimension(640, 480);
     }
 
-    public void display()
+    public static JFrame defaultView(Graph g, String title)
     {
-        this.setVisible(true);
-    }
-
-    public static AfficheurGraph defaultView(Graph g, String title)
-    {
+        JFrame frame = new JFrame(title);
         AfficheurGraph ag = new AfficheurGraph(g, title);
 
-        ag.setSize(800, 600);
-        ag.setLocationRelativeTo(null);
-        ag.display();
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
 
-        return ag;
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.add(ag);
+
+        frame.setVisible(true);
+
+        return frame;
     }
 
-    public static AfficheurGraph defaultViewWithIdTitle(Graph g)
+    public static JFrame defaultViewWithIdTitle(Graph g)
     {
         return defaultView(g, g.getId());
     }
