@@ -30,7 +30,7 @@ public class AfficheurGraph extends JPanel
     @Override
     public Dimension getPreferredSize()
     {
-        return new Dimension(640, 480);
+        return new Dimension(600, 600);
     }
 
     public static JFrame defaultView(Graph g, String title)

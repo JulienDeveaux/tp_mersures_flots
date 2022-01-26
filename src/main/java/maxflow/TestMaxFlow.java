@@ -6,6 +6,8 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.stream.GraphParseException;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
 public class TestMaxFlow
@@ -51,7 +53,7 @@ public class TestMaxFlow
             if (cap == flow) e.setAttribute("ui.style", "fill-color: red;");
         });
 
-        AfficheurGraph.defaultViewWithIdTitle(reseau);
+        //AfficheurGraph.defaultViewWithIdTitle(reseau);
 
         Graph reseauEcart = new SingleGraph("Graph d'écart autoroute");
         reseauEcart.setAttribute("ui.stylesheet", styleSheet);
@@ -88,7 +90,17 @@ public class TestMaxFlow
             }
         });
 
-        AfficheurGraph.defaultView(reseauEcart, "Réseau écart (Autoroute)");
+        JFrame frameAutoroute = new JFrame("autoroute & graph écart");
+        frameAutoroute.add(BorderLayout.WEST, new AfficheurGraph(reseau, "Autoroute"));
+        frameAutoroute.add(BorderLayout.EAST, new AfficheurGraph(reseauEcart, "écart"));
+
+        frameAutoroute.setResizable(false);
+        frameAutoroute.setSize(1200, 600);
+        frameAutoroute.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameAutoroute.setLocationRelativeTo(null);
+        frameAutoroute.setVisible(true);
+
+        //AfficheurGraph.defaultView(reseauEcart, "Réseau écart (Autoroute)");
     }
 
     private static void testAndExempleCours() throws IOException, GraphParseException
