@@ -20,11 +20,18 @@ public class AfficheurGraph extends JPanel
 
         this.setLayout(new BorderLayout());
 
+        JLabel titre = new JLabel(title);
+        titre.setHorizontalAlignment(JLabel.CENTER);
+
+        this.add(BorderLayout.NORTH, titre);
+
         Viewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         viewer.enableAutoLayout();
 
         ViewPanel viewPanel = (ViewPanel) viewer.addDefaultView(false);
         this.add(viewPanel);
+
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     @Override

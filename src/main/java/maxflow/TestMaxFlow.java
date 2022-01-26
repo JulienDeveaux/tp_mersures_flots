@@ -92,10 +92,10 @@ public class TestMaxFlow
 
         JFrame frameAutoroute = new JFrame("autoroute & graph écart");
         frameAutoroute.add(BorderLayout.WEST, new AfficheurGraph(reseau, "Autoroute"));
-        frameAutoroute.add(BorderLayout.EAST, new AfficheurGraph(reseauEcart, "écart"));
+        frameAutoroute.add(BorderLayout.EAST, new AfficheurGraph(reseauEcart, "graph écart"));
 
         frameAutoroute.setResizable(false);
-        frameAutoroute.setSize(1200, 600);
+        frameAutoroute.setSize(1213, 600);
         frameAutoroute.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameAutoroute.setLocationRelativeTo(null);
         frameAutoroute.setVisible(true);
