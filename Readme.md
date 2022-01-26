@@ -6,3 +6,4 @@
 3. Donnez la solution du problème de flot max en utilisant l'algorithme mis à votre disposition. Vous afficherez le réseau, les valeurs du flot sur les arêtes, et vous mettrez en évidence les arêtes saturées. Prouvez que le flot obtenu est maximum.
    1. Le flot obtenu est maximum parce que, si le flot est complet, il est maximum. Pour qu'un flot soit complet, il faut qu'au moin un arc entre notre source et notre destination soit complet.
    Ici, tous les chemins pour aller vers I passent par G ou H. GI est saturé et tous les arcs allant vers H le sont aussi(HD/HF). Le flot est donc maximal.
+4. Le flot maximal avec un tronçon en plus de 25000 de capacité entre AI augmenterais la capacité du réseau actuel, limité à 900 de capacité. L'ajout de ces tronçons devrait donc augmenter le flot maximal.
