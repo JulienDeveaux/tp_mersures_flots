@@ -4,9 +4,6 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
-import org.graphstream.stream.GraphParseException;
-
-import java.io.IOException;
 
 public class TestMaxFlow
 {
@@ -82,7 +79,7 @@ public class TestMaxFlow
 
         //graphCours.display();
 
-        Graph reseau = new SingleGraph("autoroute");
+        Graph reseau = new SingleGraph("Autoroute");
         reseau.setAttribute("ui.stylesheet", styleSheet);
 
         reseau.read("src/main/resources/reseau.dgs");
@@ -104,7 +101,7 @@ public class TestMaxFlow
             if (cap == flow) e.setAttribute("ui.style", "fill-color: red;");
         });
 
-        reseau.display();
+        AfficheurGraph.defaultViewWithIdTitle(reseau);
 
         Graph reseauEcart = new SingleGraph("Graph d'écart autoroute");
         reseauEcart.setAttribute("ui.stylesheet", styleSheet);
@@ -141,7 +138,7 @@ public class TestMaxFlow
             }
         });
 
-        reseauEcart.display();
+        AfficheurGraph.defaultView(reseauEcart, "Réseau écart (Autoroute)");
     }
 
 }
