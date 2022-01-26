@@ -11,11 +11,12 @@ import java.util.Queue;
 
 public class MaxFlow implements Algorithm
 {
-    private Graph network;
+    private Graph  network;
     private String capacityAttribute = "cap";
-    private Node source, sink;
+    private Node   source, sink;
     private double totalFlow;
-    private Queue<Node> queue = new LinkedList<>();
+
+    private final Queue<Node> queue = new LinkedList<>();
 
     public void init(Graph graph)
     {
@@ -26,9 +27,9 @@ public class MaxFlow implements Algorithm
         graph.edges().forEach( e ->
         {
             Edge e1 = network.addEdge(e.getId(), e.getSourceNode().getId(), e.getTargetNode().getId(), true);
-            e1.setAttribute("cap",
-                    e.hasNumber(capacityAttribute) ? e.getNumber(capacityAttribute) : Double.POSITIVE_INFINITY);
+            e1.setAttribute("cap", e.hasNumber(capacityAttribute) ? e.getNumber(capacityAttribute) : Double.POSITIVE_INFINITY);
             e1.setAttribute("flow", 0);
+
             Edge e2 = network.addEdge(e.getId() + "_rev", e.getTargetNode().getId(), e.getSourceNode().getId(), true);
             e2.setAttribute("cap", 0);
             e2.setAttribute("flow", 0);
@@ -39,6 +40,7 @@ public class MaxFlow implements Algorithm
     {
         totalFlow = 0;
         bfs();
+
         while (sink.hasAttribute("arc"))
         {
             augmentFlow();
@@ -80,8 +82,10 @@ public class MaxFlow implements Algorithm
     {
         queue.clear();
         queue.add(source);
+
         for (Node n : network)
             n.removeAttribute("arc");
+
         while (!queue.isEmpty())
         {
             Node n = queue.remove();
@@ -90,7 +94,9 @@ public class MaxFlow implements Algorithm
             {
                 double cap = e.getNumber("cap");
                 double flow = e.getNumber("flow");
+
                 Node neighbor = e.getTargetNode();
+
                 if (neighbor != source && !neighbor.hasAttribute("arc") && cap > flow)
                 {
                     neighbor.setAttribute("arc", e);
@@ -103,15 +109,17 @@ public class MaxFlow implements Algorithm
     private void augmentFlow()
     {
         double df = Double.POSITIVE_INFINITY;
+
         for (Edge e = sink.getAttribute("arc", Edge.class); e != null; e = e.getSourceNode().getAttribute("arc", Edge.class))
-        {
             df = Math.min(df, e.getNumber("cap") - e.getNumber("flow"));
-        }
+
         totalFlow += df;
         for (Edge e = sink.getAttribute("arc", Edge.class); e != null; e = e.getSourceNode().getAttribute("arc", Edge.class))
         {
             e.setAttribute("flow", e.getNumber("flow") + df);
+
             Edge er = e.getTargetNode().getEdgeToward(e.getSourceNode());
+
             er.setAttribute("flow", er.getNumber("flow") - df);
         }
     }
